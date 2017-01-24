@@ -51,19 +51,5 @@ RUNC_LIBS="-lm"
 RUNC_FLAGS="-g -Wall -include ~/prj/allheads/allheads.h -O3"
 alias runc="gcc -xc - $RUNC_LIBS $RUNC_FLAGS"
 
-### OSX
-if [[ "Darwin" = $(uname -s) ]]; then
-   
-    # check for coreutils ls (mac homebrew installs gnu ls to gls)
-    if [[ -f $(which gls) ]]; then
-        alias ls="gls"
-    fi
-
-    alias skim="open -a Skim"
-    alias fresh-emacs="open -na Emacs"
-    alias xgd-open="open"
-
-fi
-
 ### load local configuration
 [[ -e ~/.zshrc.local ]] &&  source ~/.zshrc.local
