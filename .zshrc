@@ -37,6 +37,9 @@ alias ..="cd .."
 alias g="git"
 alias npmls="npm ls -g --depth=0"
 
+# homegit
+alias homegit="GIT_DIR=~/prj/dotfiles/.git GIT_WORK_TREE=~ git"
+
 # Prompt
 autoload -U promptinit
 promptinit
