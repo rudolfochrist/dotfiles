@@ -66,6 +66,4 @@ if [[ "Darwin" = $(uname -s) ]]; then
 fi
 
 ### load local configuration
-if [[ -e ~/.zshrc.local ]]; then
-    source ~/.zshrc.local
-fi
+[[ -e ~/.zshrc.local ]] &&  source ~/.zshrc.local

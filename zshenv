@@ -20,9 +20,7 @@ export M2_HOME=/usr/local/opt/maven/libexec
 export GROOVY_HOME=/usr/local/opt/groovy/libexec
 
 # load local environment
-if [[ -e ~/.zshenv.local ]]; then
-    source ~/.zshenv.local
-fi
+[[ -e ~/.zshenv.local ]] && source ~/.zshenv.local
 
 # remove possibly duplicated entries from $PATH
 typeset -U PATH
