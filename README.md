@@ -6,9 +6,10 @@ Nothing special....
 
     git clone <dotfiles-repo> ~/prj/dotfiles
     alias homegit="GIT_DIR=~/prj/dotfiles/.git GIT_WORK_TREE=~ git" 
-    homegit checkout
+    homegit checkout -- .   # checkout all files
     <do stuff when error occurs>
     homegit config --local status.showUntrackedFiles no
+    rm README.md   # We don't need that in $HOME
     
 After that you can add new files like
 
