@@ -1,0 +1,5 @@
+# Emacs Gnus
+# http://www.emacswiki.org/emacs/MimeTypesWithGnus
+image/*; xgd-open %s
+application/*; xgd-open %s
+application/pdf; xgd-open %s
