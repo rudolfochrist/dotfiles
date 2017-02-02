@@ -1,3 +1,6 @@
+# need to run on macOS
+set startup-with-shell off
+
 define phead
        set $ptr = $arg1
        plistdata $arg0
