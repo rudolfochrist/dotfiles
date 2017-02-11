@@ -10,7 +10,8 @@ Nothing special....
     <do stuff when error occurs>
     homegit config --local status.showUntrackedFiles no
     rm README.md   # We don't need that in $HOME
-    
+    homegit update-index --assume-unchanged README.md  # doesn't show the README deletion in git status.
+     
 After that you can add new files like
 
     homegit add .somerc
