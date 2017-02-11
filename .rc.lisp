@@ -25,9 +25,6 @@
   (require :abcl-asdf)
   (require :jss))
 
-;;; generate docs on quickload
-#+quicklisp (ql:quickload :quicklisp-docs)
-
 ;;; regex
 #+quicklisp (ql:quickload :cl-ppcre)
 
