@@ -34,6 +34,4 @@
 
 ;;; personal utilities
 #+ (and asdf3.1 quicklisp (not abcl))
-(progn
-  (ql:quickload :clutils)
-  (use-package :clutils))
+(ql:quickload :clutils)
