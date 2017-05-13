@@ -1,5 +1,5 @@
 # editor
-export EDITOR="emacsclient'
+export EDITOR="emacsclient"
 
 # Locale setup
 export LANG=en_US.UTF-8

@@ -36,6 +36,9 @@ alias ..="cd .."
 # application shortcuts
 alias g="git"
 alias npmls="npm ls -g --depth=0"
+alias skim="open -a Skim"
+alias ec="emacsclient"
+alias xgd-open="open"
 
 # homegit
 alias homegit="GIT_DIR=~/prj/dotfiles/.git GIT_WORK_TREE=~ git"
