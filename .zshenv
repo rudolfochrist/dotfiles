@@ -1,5 +1,5 @@
 # editor
-export EDITOR="vim"
+export EDITOR="emacsclient'
 
 # Locale setup
 export LANG=en_US.UTF-8
