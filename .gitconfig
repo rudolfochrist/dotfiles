@@ -69,3 +69,5 @@
   clean = git-media-clean %f
   smudge = git-media-smudge %fg
 
+[gpg]
+	program = gpg2
