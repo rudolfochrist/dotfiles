@@ -31,6 +31,7 @@ bindkey -e
 # navigation
 alias ll="ls -lh --color"
 alias la="ls -lah --color"
+alias lla="ls -lah | less"
 alias ..="cd .."
 
 # application shortcuts
