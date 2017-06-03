@@ -7,6 +7,7 @@ setopt menucomplete
 
 # Load basic completions
 autoload compinit && compinit
+setopt magicequalsubst
 
 # Completion Config
 zstyle ":completion:*" use-cache on
