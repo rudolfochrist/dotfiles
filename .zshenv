@@ -6,7 +6,10 @@ export LANG=en_US.UTF-8
 
 # Ada 2012 / GNAT GPL
 export GNAT_HOME=/usr/local/gnat
-export PATH="$GNAT_HOME/bin:$PATH" 
+export PATH="$GNAT_HOME/bin:$PATH"
+
+# Add local/bin
+export PATH="$HOME/.local/bin:$PATH"
 
 # load local environment
 [[ -e ~/.zshenv.local ]] && source ~/.zshenv.local
