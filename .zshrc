@@ -26,8 +26,12 @@ SAVEHIST=1000
 setopt HIST_EXPIRE_DUPS_FIRST
 setopt EXTENDED_HISTORY
 
-# emacs keybindings
+# emacs 
 bindkey -e
+export EDITOR="emacsclient"
+
+# Locale setup
+export LANG=en_US.UTF-8
 
 # navigation
 # check for coreutils ls (mac homebrew installs gnu ls to gls)
@@ -66,3 +70,9 @@ alias runc="gcc -xc - $RUNC_LIBS $RUNC_FLAGS"
 
 # load local configuration
 [[ -e ~/.zshrc.local ]] &&  source ~/.zshrc.local
+
+# Add local/bin
+export PATH="$HOME/.local/bin:$PATH"
+
+# remove possibly duplicated entries from $PATH
+typeset -U PATH
