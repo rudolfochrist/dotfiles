@@ -30,20 +30,25 @@ setopt EXTENDED_HISTORY
 bindkey -e
 
 # navigation
+# check for coreutils ls (mac homebrew installs gnu ls to gls)
+if [[ -f $(which gls) ]]; then
+    alias ls="gls"
+fi
+
 alias ll="ls -lh --color"
-alias la="ls -lah --color"
-alias lla="ls -lah | less"
+alias la="ls -lAh --color"
+alias lla="ls -lAh | less"
 alias ..="cd .."
 
 # application shortcuts
 alias g="git"
-alias npmls="npm ls -g --depth=0"
-alias skim="open -a Skim"
 alias ec="emacsclient"
-alias xgd-open="open"
 
 # homegit
 alias homegit="GIT_DIR=~/prj/dotfiles/.git GIT_WORK_TREE=~ git"
+
+# load more aliases
+[[ -e ~/.zsh_aliases ]] && . ~/.zsh_aliases
 
 # Prompt
 autoload -U promptinit
@@ -59,5 +64,5 @@ RUNC_LIBS="-lm"
 RUNC_FLAGS="-g -Wall -include ~/prj/allheads/allheads.h -O3"
 alias runc="gcc -xc - $RUNC_LIBS $RUNC_FLAGS"
 
-### load local configuration
+# load local configuration
 [[ -e ~/.zshrc.local ]] &&  source ~/.zshrc.local
