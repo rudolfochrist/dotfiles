@@ -49,7 +49,7 @@ alias g="git"
 alias ec="emacsclient"
 
 # homegit
-alias homegit="GIT_DIR=~/prj/dotfiles/.git GIT_WORK_TREE=~ git"
+alias homegit="GIT_DIR=~/.dotfiles/.git GIT_WORK_TREE=~ git"
 
 # load more aliases
 [[ -e ~/.zsh_aliases ]] && . ~/.zsh_aliases

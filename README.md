@@ -4,8 +4,8 @@ Nothing special....
 
 ## Installation
 
-    git clone <dotfiles-repo> ~/prj/dotfiles
-    alias homegit="GIT_DIR=~/prj/dotfiles/.git GIT_WORK_TREE=~ git" 
+    git clone <dotfiles-repo> ~/.dotfiles
+    alias homegit="GIT_DIR=~/.dotfiles/.git GIT_WORK_TREE=~ git" 
     homegit checkout -- .   # checkout all files
     <do stuff when error occurs>
     homegit config --local status.showUntrackedFiles no
