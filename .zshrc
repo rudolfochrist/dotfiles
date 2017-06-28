@@ -28,7 +28,7 @@ setopt EXTENDED_HISTORY
 
 # emacs 
 bindkey -e
-export EDITOR="emacsclient"
+export EDITOR="emacsclient -n"
 
 # Locale setup
 export LANG=en_US.UTF-8
@@ -60,8 +60,9 @@ promptinit
 prompt redhat
 
 # perlbrew
-source ~/perl5/perlbrew/etc/bashrc
-alias pb="perlbrew"
+if [ -s $HOME/perl5/perlbrew ]; then
+    source ~/perl5/perlbrew/etc/bashrc
+fi 
 
 # C REPL (kinda)
 RUNC_LIBS="-lm"
