@@ -30,7 +30,6 @@
 
 ;;; unit testing
 #+quicklisp (ql:quickload :fiveam)
-#+quicklisp (ql:quickload :prove)
 
 ;;; personal utilities
 #+ (and asdf3.1 quicklisp (not abcl))
