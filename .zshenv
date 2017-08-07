@@ -8,3 +8,6 @@ export LANG=en_US.UTF-8
 export PATH="$HOME/.local/bin:$PATH"
 
 
+
+# remove possibly duplicated entries from $PATH
+typeset -U PATH

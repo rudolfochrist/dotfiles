@@ -68,5 +68,3 @@ alias runc="gcc -xc - $RUNC_LIBS $RUNC_FLAGS"
 # load local configuration
 [[ -e ~/.zshrc.local ]] &&  source ~/.zshrc.local
 
-# remove possibly duplicated entries from $PATH
-typeset -U PATH
