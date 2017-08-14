@@ -44,6 +44,7 @@
   rh = reset --hard
   df = diff
   dc = diff --cached
+  fa = fetch --all
 
   # Fancy logging.
   #   h = head
