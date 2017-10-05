@@ -50,10 +50,13 @@ alias homegit="GIT_DIR=~/.dotfiles/.git GIT_WORK_TREE=~ git"
 # load more aliases
 [[ -e ~/.zsh_aliases ]] && . ~/.zsh_aliases
 
+# VCS
+autoload -Uz vcs_info
+precmd () { vcs_info }
+setopt prompt_subst
+
 # Prompt
-autoload -U promptinit
-promptinit
-prompt redhat
+PS1="[%n@%M\$vcs_info_msg_0_ %1~]%# "
 
 # perlbrew
 if [ -s $HOME/perl5/perlbrew ]; then
