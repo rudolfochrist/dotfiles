@@ -1,3 +1,7 @@
+# General
+export DISPLAY=:0
+export TERM=xterm-256color
+
 # the env
 export EDITOR="emacsclient -n"
 
