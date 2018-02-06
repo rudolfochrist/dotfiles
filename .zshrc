@@ -26,7 +26,7 @@ SAVEHIST=1000
 setopt HIST_EXPIRE_DUPS_FIRST
 setopt EXTENDED_HISTORY
 
-# emacs 
+# emacs
 bindkey -e
 
 # navigation
@@ -61,12 +61,22 @@ PS1="[%n@%M\$vcs_info_msg_0_ %1~]%# "
 # perlbrew
 if [ -s $HOME/perl5/perlbrew ]; then
     source ~/perl5/perlbrew/etc/bashrc
-fi 
+fi
 
 # C REPL (kinda)
 RUNC_LIBS="-lm"
 RUNC_FLAGS="-g -Wall -include ~/prj/allheads/allheads.h -O3"
 alias runc="gcc -xc - $RUNC_LIBS $RUNC_FLAGS"
+
+# SSH Agent
+# https://unix.stackexchange.com/questions/90853/how-can-i-run-ssh-add-automatically-without-password-prompt/217223#217223
+if [ ! -S $HOME/.ssh/ssh_auth_sock ]; then
+    eval "$(ssh-agent -s)"
+    ln -sf "$SSH_AUTH_SOCK" $HOME/.ssh/ssh_auth_sock
+fi
+export SSH_AUTH_SOCK=$HOME/.ssh/ssh_auth_sock
+ssh-add -l > /dev/null || ssh-add
+
 
 # load local configuration
 [[ -e ~/.zshrc.local ]] &&  source ~/.zshrc.local
