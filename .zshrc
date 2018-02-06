@@ -30,11 +30,6 @@ setopt EXTENDED_HISTORY
 bindkey -e
 
 # navigation
-# check for coreutils ls (mac homebrew installs gnu ls to gls)
-if [[ -f $(which gls) ]]; then
-    alias ls="gls"
-fi
-
 alias ll="ls -lh --color"
 alias la="ls -lAh --color"
 alias lla="ls -lAh | less"
