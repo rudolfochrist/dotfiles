@@ -1,5 +1,8 @@
 (in-package :stumpwm)
 
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (ql:quickload :clx-truetype)
+  (ql:quickload :xembed))
 ;;; prefix
 (set-prefix-key (kbd "s-t"))
 
@@ -131,7 +134,7 @@
   (run-shell-command "cal -3" t))
 
 (defcommand logout ()
-    ()
+  ()
   (run-shell-command "pkill -KILL -u $USER"))
 
 (defcommand (pull-from-windowlist-by-class tile-group) () ()
@@ -146,7 +149,7 @@
 
 ;;; terminals
 (defcommand st ()
-    ()
+  ()
   (run-or-raise "st" '(:class "st")))
 (prefix-set-key (kbd "c") "st")
 (prefix-set-key (kbd "C-c") "st")
@@ -156,7 +159,7 @@
   ()
   (run-or-raise "firefox" '(:class "Firefox")))
 (prefix-set-key (kbd "b") "firefox")
-(prefix-set-key (kbd "C-b") "Firefox")
+(prefix-set-key (kbd "C-b") "firefox")
 (global-set-key (kbd "s-b") "firefox")
 
 (defcommand dmenu ()
@@ -188,24 +191,27 @@
 (prefix-set-key (kbd "3") "hsplit")
 (prefix-set-key (kbd "0") "remove")
 
-
 ;;; swank
-(load "~/.emacs.d/site-lisp/slime/swank-loader.lisp")
-(swank-loader:init)
+#+ignore
+(let ((swank-loader "~/.emacs.d/site-lisp/slime/swank-loader.lisp"))
+  (when (probe-file swank-loader)
+    (load swank-loader)
+    (swank-loader:init)
 
-(defcommand swank ()
-    ()
-  (swank:create-server :port 4005
-                       :style swank:*communication-style*
-                       :dont-close t)
-  (echo-string (current-screen)
-               "Starting swank on port 4005."))
+    (defcommand swank ()
+      ()
+      (swank:create-server :port 4005
+                           :style swank:*communication-style*
+                           :dont-close t)
+      (echo-string (current-screen)
+                   "Starting swank on port 4005."))))
 
 ;; startup
 (unless (head-mode-line (current-head))
   (toggle-mode-line (current-screen) (current-head))
   (stumptray:stumptray))
 
+#+ignore
 (unless swm-gaps::*gaps-on*
   (swm-gaps:toggle-gaps))
 
