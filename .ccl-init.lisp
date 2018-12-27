@@ -1,1 +1,0 @@
-/Users/fyi/.rc.lisp
