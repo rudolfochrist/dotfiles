@@ -30,6 +30,10 @@ setopt EXTENDED_HISTORY
 bindkey -e
 
 # navigation
+if [ -x '/usr/local/bin/gls' ]; then
+  alias ls='gls'
+fi
+
 alias ll="ls -lh --color"
 alias la="ls -lAh --color"
 alias lla="ls -lAh | less"
@@ -65,12 +69,14 @@ alias runc="gcc -xc - $RUNC_LIBS $RUNC_FLAGS"
 
 # SSH Agent
 # https://unix.stackexchange.com/questions/90853/how-can-i-run-ssh-add-automatically-without-password-prompt/217223#217223
-if [ ! -S $HOME/.ssh/ssh_auth_sock ]; then
-    eval "$(ssh-agent -s)"
-    ln -sf "$SSH_AUTH_SOCK" $HOME/.ssh/ssh_auth_sock
+if [ "$(uname -s)" != 'Darwin' ]; then
+  if [ ! -S $HOME/.ssh/ssh_auth_sock ]; then
+     eval "$(ssh-agent -s)"
+     ln -sf "$SSH_AUTH_SOCK" $HOME/.ssh/ssh_auth_sock
+  fi
+  export SSH_AUTH_SOCK=$HOME/.ssh/ssh_auth_sock
+  ssh-add -l > /dev/null || ssh-add
 fi
-export SSH_AUTH_SOCK=$HOME/.ssh/ssh_auth_sock
-ssh-add -l > /dev/null || ssh-add
 
 
 # load local configuration
