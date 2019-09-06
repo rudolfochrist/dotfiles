@@ -19,58 +19,23 @@
 #+sbcl
 (setf sb-impl::*default-external-format* :utf-8)
 
+#+quicklisp
+(ql:quickload :clutils :silent t)
+
 #+abcl
 (eval-when (:compile-toplevel :load-toplevel :execute)
   (require :abcl-contrib)
   (require :abcl-asdf)
   (require :jss))
 
-;;; libs
-#+quicklisp (ql:quickload '(:clutils) :silent t)
-
 ;;; Allegro CL REPL
 #+sbcl
 (progn
   (ignore-errors (require 'sb-aclrepl))
   (when (find-package :sb-aclrepl)
+    (load "~/.sb-aclrepl.lisp")
     (push :aclrepl *features*)))
 
-#+aclrepl
-(defun ovwrt-exit-cmd (&optional (status 0))
-  "Exit command overwrite that doesn't terminate threads."
-  #+sb-thread
-  (flet ((other-threads ()
-           (delete sb-thread:*current-thread*
-                   (sb-thread:list-all-threads))))
-    (let ((other-threads (other-threads)))
-      (when other-threads
-        (format *standard-output* "There exists the following processes~%")
-        (format *standard-output* "~{~A~%~}" other-threads)
-        (format *standard-output* "Do you want to exit lisp anyway [n]? ")
-        (force-output *standard-output*)
-        (let ((input (string-trim '(#\Space #\Tab #\Return)
-                                  (read-line *standard-input*))))
-          (unless (and (plusp (length input))
-                       (or (char= #\y (char input 0))
-                           (char= #\Y (char input 0))))
-            (return-from ovwrt-exit-cmd))))))
-  (sb-ext:exit :code status))
-
-#+aclrepl
-;;; This is super hackish.
-(let ((cmd (sb-aclrepl::find-cmd "exit")))
-  (setf (sb-aclrepl::cmd-table-entry-func cmd) #'ovwrt-exit-cmd)
-  (sb-aclrepl::%add-entry
-   cmd
-   (sb-aclrepl::cmd-table-entry-abbr-len cmd)))
-
-#+(and aclrepl quicklisp)
-(sb-aclrepl:alias ("ql" 1 "quickload system") (system)
-                  (ql:quickload system))
-
-#+(and aclrepl asdf)
-(sb-aclrepl:alias ("make" 1 "asdf:make system") (system)
-                  (asdf:make system))
 
 ;;; machine information
 (defun machine-info ()
