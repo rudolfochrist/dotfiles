@@ -139,332 +139,342 @@
                     {
                         "description": "LispM Keys",
                         "manipulators": [
-                          {
-                            "from": {
-                              "key_code": "9",
-                              "modifiers": {
-                                "mandatory": [
-                                  "left_shift"
-                                ]
-                              }
-                            },
-                            "to": [
-                              {
-                                "key_code": "open_bracket",
-                                "modifiers": [
-                                  "left_shift"
-                                ]
-                              }
-                            ],
-                            "type": "basic"
-                          },
-                          {
-                            "from": {
-                              "key_code": "9",
-                              "modifiers": {
-                                "mandatory": [
-                                  "right_shift"
-                                ]
-                              }
-                            },
-                            "to": [
-                              {
-                                "key_code": "open_bracket",
-                                "modifiers": [
-                                  "left_shift"
-                                ]
-                              }
-                            ],
-                            "type": "basic"
-                          },
-                          {
-                            "from": {
-                              "key_code": "0",
-                              "modifiers": {
-                                "mandatory": [
-                                  "left_shift"
-                                ]
-                              }
-                            },
-                            "to": [
-                              {
-                                "key_code": "close_bracket",
-                                "modifiers": [
-                                  "left_shift"
-                                ]
-                              }
-                            ],
-                            "type": "basic"
-                          },
-                          {
-                            "from": {
-                              "key_code": "0",
-                              "modifiers": {
-                                "mandatory": [
-                                  "right_shift"
-                                ]
-                              }
-                            },
-                            "to": [
-                              {
-                                "key_code": "close_bracket",
-                                "modifiers": [
-                                  "left_shift"
-                                ]
-                              }
-                            ],
-                            "type": "basic"
-                          },
-                          {
-                            "from": {
-                              "key_code": "open_bracket",
-                              "modifiers": {
-                                "mandatory": [
-                                  "left_shift"
-                                ]
-                              }
-                            },
-                            "to": [
-                              {
-                                "key_code": "open_bracket"
-                              }
-                            ],
-                            "type": "basic"
-                          },
-                          {
-                            "from": {
-                              "key_code": "open_bracket",
-                              "modifiers": {
-                                "mandatory": [
-                                  "right_shift"
-                                ]
-                              }
-                            },
-                            "to": [
-                              {
-                                "key_code": "open_bracket"
-                              }
-                            ],
-                            "type": "basic"
-                          },
-                          {
-                            "from": {
-                              "key_code": "close_bracket",
-                              "modifiers": {
-                                "mandatory": [
-                                  "left_shift"
-                                ]
-                              }
-                            },
-                            "to": [
-                              {
-                                "key_code": "close_bracket"
-                              }
-                            ],
-                            "type": "basic"
-                          },
-                          {
-                            "from": {
-                              "key_code": "close_bracket",
-                              "modifiers": {
-                                "mandatory": [
-                                  "right_shift"
-                                ]
-                              }
-                            },
-                            "to": [
-                              {
-                                "key_code": "close_bracket"
-                              }
-                            ],
-                            "type": "basic"
-                          },
-                          {
-                            "from": {
-                              "key_code": "open_bracket"
-                            },
-                            "to": [
-                              {
-                                "key_code": "9",
-                                "modifiers": [
-                                  "left_shift"
-                                ]
-                              }
-                            ],
-                            "type": "basic"
-                          },
-                          {
-                            "from": {
-                              "key_code": "close_bracket"
-                            },
-                            "to": [
-                              {
-                                "key_code": "0",
-                                "modifiers": [
-                                  "left_shift"
-                                ]
-                              }
-                            ],
-                            "type": "basic"
-                          },
-                          {
-                            "from": {
-                              "key_code": "caps_lock"
-                            },
-                            "to": [
-                              {
-                                "key_code": "delete_or_backspace"
-                              }
-                            ],
-                            "type": "basic"
-                          }
-                          ]
-                          },
-                          {
-                            "description": "Sane Emacs",
-                            "manipulators": [
-                              {
-                                "conditions": [
-                                  {
-                                    "bundle_identifiers": [
-                                      "^org\\.gnu\\.Emacs$"
-                                    ],
-                                    "type": "frontmost_application_if"
-                                  }
-                                ],
+                            {
                                 "from": {
-                                  "key_code": "left_gui"
+                                    "key_code": "9",
+                                    "modifiers": {
+                                        "mandatory": [
+                                            "left_shift"
+                                        ]
+                                    }
                                 },
                                 "to": [
-                                  {
-                                    "key_code": "left_control"
-                                  }
+                                    {
+                                        "key_code": "open_bracket",
+                                        "modifiers": [
+                                            "left_shift"
+                                        ]
+                                    }
                                 ],
                                 "type": "basic"
-                              },
-                              {
-                                "conditions": [
-                                  {
-                                    "bundle_identifiers": [
-                                      "^org\\.gnu\\.Emacs$"
-                                    ],
-                                    "type": "frontmost_application_if"
-                                  }
-                                ],
+                            },
+                            {
                                 "from": {
-                                  "key_code": "right_gui"
+                                    "key_code": "9",
+                                    "modifiers": {
+                                        "mandatory": [
+                                            "right_shift"
+                                        ]
+                                    }
                                 },
                                 "to": [
-                                  {
-                                    "key_code": "right_control"
-                                  }
+                                    {
+                                        "key_code": "open_bracket",
+                                        "modifiers": [
+                                            "left_shift"
+                                        ]
+                                    }
                                 ],
                                 "type": "basic"
-                              },
-                              {
-                                "conditions": [
-                                  {
-                                    "bundle_identifiers": [
-                                      "^org\\.gnu\\.Emacs$"
-                                    ],
-                                    "type": "frontmost_application_if"
-                                  }
-                                ],
+                            },
+                            {
                                 "from": {
-                                  "key_code": "left_control"
+                                    "key_code": "0",
+                                    "modifiers": {
+                                        "mandatory": [
+                                            "left_shift"
+                                        ]
+                                    }
                                 },
                                 "to": [
-                                  {
+                                    {
+                                        "key_code": "close_bracket",
+                                        "modifiers": [
+                                            "left_shift"
+                                        ]
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "from": {
+                                    "key_code": "0",
+                                    "modifiers": {
+                                        "mandatory": [
+                                            "right_shift"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "close_bracket",
+                                        "modifiers": [
+                                            "left_shift"
+                                        ]
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "from": {
+                                    "key_code": "open_bracket",
+                                    "modifiers": {
+                                        "mandatory": [
+                                            "left_shift"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "open_bracket"
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "from": {
+                                    "key_code": "open_bracket",
+                                    "modifiers": {
+                                        "mandatory": [
+                                            "right_shift"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "open_bracket"
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "from": {
+                                    "key_code": "close_bracket",
+                                    "modifiers": {
+                                        "mandatory": [
+                                            "left_shift"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "close_bracket"
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "from": {
+                                    "key_code": "close_bracket",
+                                    "modifiers": {
+                                        "mandatory": [
+                                            "right_shift"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "close_bracket"
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "from": {
+                                    "key_code": "open_bracket",
+                                    "modifiers": {
+                                        "optional": [
+                                            "any"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "9",
+                                        "modifiers": [
+                                            "left_shift"
+                                        ]
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "from": {
+                                    "key_code": "close_bracket",
+                                    "modifiers": {
+                                        "optional": [
+                                            "any"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "0",
+                                        "modifiers": [
+                                            "left_shift"
+                                        ]
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "from": {
+                                    "key_code": "caps_lock"
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "delete_or_backspace"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "Sane Emacs",
+                        "manipulators": [
+                            {
+                                "conditions": [
+                                    {
+                                        "bundle_identifiers": [
+                                            "^org\\.gnu\\.Emacs$"
+                                        ],
+                                        "type": "frontmost_application_if"
+                                    }
+                                ],
+                                "from": {
                                     "key_code": "left_gui"
-                                  }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "left_control"
+                                    }
                                 ],
                                 "type": "basic"
-                              },
-                              {
+                            },
+                            {
                                 "conditions": [
-                                  {
-                                    "bundle_identifiers": [
-                                      "^org\\.gnu\\.Emacs$"
-                                    ],
-                                    "type": "frontmost_application_if"
-                                  }
+                                    {
+                                        "bundle_identifiers": [
+                                            "^org\\.gnu\\.Emacs$"
+                                        ],
+                                        "type": "frontmost_application_if"
+                                    }
                                 ],
                                 "from": {
-                                  "key_code": "right_control"
-                                },
-                                "to": [
-                                  {
                                     "key_code": "right_gui"
-                                  }
-                                ],
-                                "type": "basic"
-                              },
-                              {
-                                "from": {
-                                  "key_code": "tab",
-                                  "modifiers": {
-                                    "mandatory": [
-                                      "left_control"
-                                    ],
-                                    "optional": [
-                                      "left_shift"
-                                    ]
-                                  }
                                 },
                                 "to": [
-                                  {
+                                    {
+                                        "key_code": "right_control"
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "conditions": [
+                                    {
+                                        "bundle_identifiers": [
+                                            "^org\\.gnu\\.Emacs$"
+                                        ],
+                                        "type": "frontmost_application_if"
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "left_control"
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "left_gui"
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "conditions": [
+                                    {
+                                        "bundle_identifiers": [
+                                            "^org\\.gnu\\.Emacs$"
+                                        ],
+                                        "type": "frontmost_application_if"
+                                    }
+                                ],
+                                "from": {
+                                    "key_code": "right_control"
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "right_gui"
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "from": {
                                     "key_code": "tab",
-                                    "modifiers": [
-                                      "left_command"
-                                    ]
-                                  }
-                                ],
-                                "type": "basic"
-                              },
-                              {
-                                "from": {
-                                  "key_code": "left_shift",
-                                  "modifiers": {
-                                    "mandatory": [
-                                      "left_control"
-                                    ]
-                                  }
+                                    "modifiers": {
+                                        "mandatory": [
+                                            "left_control"
+                                        ],
+                                        "optional": [
+                                            "left_shift"
+                                        ]
+                                    }
                                 },
                                 "to": [
-                                  {
+                                    {
+                                        "key_code": "tab",
+                                        "modifiers": [
+                                            "left_command"
+                                        ]
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "from": {
                                     "key_code": "left_shift",
-                                    "modifiers": [
-                                      "left_command"
-                                    ]
-                                  }
-                                ],
-                                "type": "basic"
-                              },
-                              {
-                                "from": {
-                                  "key_code": "escape",
-                                  "modifiers": {
-                                    "mandatory": [
-                                      "left_control"
-                                    ],
-                                    "optional": [
-                                      "left_shift"
-                                    ]
-                                  }
+                                    "modifiers": {
+                                        "mandatory": [
+                                            "left_control"
+                                        ]
+                                    }
                                 },
                                 "to": [
-                                  {
-                                    "key_code": "escape",
-                                    "modifiers": [
-                                      "left_command"
-                                    ]
-                                  }
+                                    {
+                                        "key_code": "left_shift",
+                                        "modifiers": [
+                                            "left_command"
+                                        ]
+                                    }
                                 ],
                                 "type": "basic"
-                              }
-                            ]
-                          }
-                          ]
+                            },
+                            {
+                                "from": {
+                                    "key_code": "escape",
+                                    "modifiers": {
+                                        "mandatory": [
+                                            "left_control"
+                                        ],
+                                        "optional": [
+                                            "left_shift"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "escape",
+                                        "modifiers": [
+                                            "left_command"
+                                        ]
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    }
+                ]
             },
             "devices": [],
             "fn_function_keys": [
