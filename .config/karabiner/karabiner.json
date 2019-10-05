@@ -343,7 +343,12 @@
                                     }
                                 ],
                                 "from": {
-                                    "key_code": "left_gui"
+                                    "key_code": "left_gui",
+                                    "modifiers": {
+                                        "optional": [
+                                            "any"
+                                        ]
+                                    }
                                 },
                                 "to": [
                                     {
@@ -362,7 +367,12 @@
                                     }
                                 ],
                                 "from": {
-                                    "key_code": "right_gui"
+                                    "key_code": "right_gui",
+                                    "modifiers": {
+                                        "optional": [
+                                            "any"
+                                        ]
+                                    }
                                 },
                                 "to": [
                                     {
@@ -381,7 +391,12 @@
                                     }
                                 ],
                                 "from": {
-                                    "key_code": "left_control"
+                                    "key_code": "left_control",
+                                    "modifiers": {
+                                        "optional": [
+                                            "any"
+                                        ]
+                                    }
                                 },
                                 "to": [
                                     {
@@ -400,7 +415,12 @@
                                     }
                                 ],
                                 "from": {
-                                    "key_code": "right_control"
+                                    "key_code": "right_control",
+                                    "modifiers": {
+                                        "optional": [
+                                            "any"
+                                        ]
+                                    }
                                 },
                                 "to": [
                                     {
