@@ -20,7 +20,7 @@
 (setf sb-impl::*default-external-format* :utf-8)
 
 #+quicklisp
-(ql:quickload :clutils :silent t)
+(ignore-errors (ql:quickload :clutils :silent t))
 
 #+abcl
 (eval-when (:compile-toplevel :load-toplevel :execute)

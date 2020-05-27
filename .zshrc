@@ -34,8 +34,8 @@ if [ -x '/usr/local/bin/gls' ]; then
   alias ls='gls'
 fi
 
-alias ll="ls -lh --color"
-alias la="ls -lAh --color"
+alias ll="ls -lhG"
+alias la="ls -lAhG"
 alias lla="ls -lAh | less"
 alias ..="cd .."
 

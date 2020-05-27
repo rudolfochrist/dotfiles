@@ -71,4 +71,6 @@
   smudge = git-media-smudge %fg
 
 [gpg]
-	program = gpg2
+	program = gpg
+[credential]
+	helper = osxkeychain
