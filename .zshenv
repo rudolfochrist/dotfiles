@@ -15,5 +15,8 @@ export CC=cc
 export PATH=$PATH:~/Library/Python/3.7/bin
 
 # Go lang
-export PATH=$PATH:/usr/local/go/bin
+export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin
+
+# Postgres
+export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/latest/bin
 

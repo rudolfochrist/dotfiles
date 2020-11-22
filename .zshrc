@@ -31,13 +31,13 @@ bindkey -e
 
 # navigation
 if [ -x '/usr/local/bin/gls' ]; then
-  alias ls='gls'
+    alias ls='gls'
+    alias ll='ls -lhv --color=auto'
+    alias la='ll -A'
+else
+    alias ll="ls -lhG"
+    alias la="ls -lAhG"
 fi
-
-alias ll="ls -lhG"
-alias la="ls -lAhG"
-alias lla="ls -lAh | less"
-alias ..="cd .."
 
 # application shortcuts
 alias g="git"
@@ -57,16 +57,6 @@ setopt prompt_subst
 # Prompt
 PS1="[%n@%M\$vcs_info_msg_0_ %1~]%# "
 
-# perlbrew
-if [ -s $HOME/perl5/perlbrew ]; then
-    source ~/perl5/perlbrew/etc/bashrc
-fi
-
-# C REPL (kinda)
-RUNC_LIBS="-lm"
-RUNC_FLAGS="-g -Wall -include ~/prj/allheads/allheads.h -O3"
-alias runc="gcc -xc - $RUNC_LIBS $RUNC_FLAGS"
-
 # SSH Agent
 # https://unix.stackexchange.com/questions/90853/how-can-i-run-ssh-add-automatically-without-password-prompt/217223#217223
 if [ "$(uname -s)" != 'Darwin' ]; then
@@ -78,6 +68,17 @@ if [ "$(uname -s)" != 'Darwin' ]; then
   ssh-add -l > /dev/null || ssh-add
 fi
 
+# plenv
+export PATH=$HOME/.plenv/bin:$PATH
+eval "$(plenv init -)"
+
+# rbenv
+export PATH=$HOME/.rbenv/bin:$PATH
+eval "$(rbenv init -)"
+
+# colors for ls
+export CLICOLOR=1
+export LSCOLORS='gxfxcxdxbxegedabagacad'
 
 # load local configuration
 [[ -e ~/.zshrc.local ]] &&  source ~/.zshrc.local
