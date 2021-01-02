@@ -20,3 +20,6 @@ export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin
 # Postgres
 export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/latest/bin
 
+# TeX Live
+export PATH=$PATH:/usr/local/texlive/2020basic/bin/x86_64-darwin
+
