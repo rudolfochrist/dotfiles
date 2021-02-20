@@ -22,6 +22,8 @@
 #+quicklisp
 (ignore-errors (ql:quickload :clutils :silent t))
 
+(load #p"~/.swank-user.lisp")
+
 #+abcl
 (eval-when (:compile-toplevel :load-toplevel :execute)
   (require :abcl-contrib)
@@ -37,7 +39,7 @@
     (push :aclrepl *features*)))
 
 
-;;; machine information
+;;; Machine information
 (defun machine-info ()
   "Print this host's details."
   (format t "~@{~A: ~A~^~%~}~%"
