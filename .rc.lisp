@@ -52,3 +52,9 @@
           "Lisp Information"  ""
           "-- Implementation"  (lisp-implementation-type)
           "-- Version"  (lisp-implementation-version)))
+
+
+#+asdf
+(let ((lsd (asdf:find-system "lsd" nil)))
+  (when lsd
+    (asdf:load-system lsd)))
