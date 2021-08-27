@@ -8,9 +8,10 @@
 ;;; - ~/.sbclrc (sbcl)
 ;;; - ~/.abclrc (abcl)
 ;;; - ~/.mkclrc (mkcl)
-;;; - ~/.clinit.cl (acl/allegro cl]
+;;; - ~/.clinit.cl (acl/allegro cl)
 
-#-quicklisp
+(require 'asdf)
+
 (let ((quicklisp-init (merge-pathnames "quicklisp/setup.lisp"
                                        (user-homedir-pathname))))
   (when (probe-file quicklisp-init)
@@ -54,9 +55,3 @@
           "Lisp Information"  ""
           "-- Implementation"  (lisp-implementation-type)
           "-- Version"  (lisp-implementation-version)))
-
-
-#+asdf
-(let ((lsd (asdf:find-system "lsd" nil)))
-  (when lsd
-    (asdf:load-system lsd)))
