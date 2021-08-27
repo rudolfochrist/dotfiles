@@ -14,6 +14,8 @@ export CC=cc
 # Python Modules
 export PATH=$PATH:~/Library/Python/3.7/bin
 
-# TeX Live
-export PATH=$PATH:/usr/local/texlive/2020basic/bin/x86_64-darwin
+# TeXTiny
+export PATH=$PATH:$HOME/texbin
 
+# Yarn
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
