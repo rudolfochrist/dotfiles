@@ -12,24 +12,25 @@
 
 (require 'asdf)
 
+;;; with-debug
+(proclaim '(optimize (speed 0) (compilation-speed 0) (safety 3) (debug 3)))
+
+;;; quicklisp
 (let ((quicklisp-init (merge-pathnames "quicklisp/setup.lisp"
                                        (user-homedir-pathname))))
   (when (probe-file quicklisp-init)
     (load quicklisp-init)))
 
+#+quicklisp
+(asdf:load-system "ql-https" :verbose nil)
+
+#+ql-https
+(setf ql-https:*quietly-use-https* t)
+
 #+sbcl
 (setf sb-impl::*default-external-format* :utf-8)
 
-#+quicklisp
-(ignore-errors (ql:quickload :clutils :silent t))
-
 (load #p"~/.swank-user.lisp")
-
-#+abcl
-(eval-when (:compile-toplevel :load-toplevel :execute)
-  (require :abcl-contrib)
-  (require :abcl-asdf)
-  (require :jss))
 
 ;;; Allegro CL REPL
 #+sbcl
