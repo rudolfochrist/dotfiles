@@ -19,3 +19,6 @@ export PATH=$PATH:$HOME/texbin
 
 # Yarn
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+
+# Postgres
+export PATH="$PATH:/Applications/Postgres.app/Contents/Versions/latest/bin/"
