@@ -1,5 +1,5 @@
-# commnd character
-escape ``
+# command character
+escape ^Zz
 
 # the following two lines give a two-line status, with the current window highlighted
 hardstatus alwayslastline
@@ -15,3 +15,5 @@ startup_message off
 attrcolor b ".I"
 defbce on
 
+# scrolling
+termcapinfo xterm*|rxvt*|kterm*|Eterm* ti@:te@
