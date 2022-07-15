@@ -45,6 +45,8 @@
   df = diff
   dc = diff --cached
   fa = fetch --all
+  checkout-latest-tag = !git checkout $(git describe --tags $(git rev-list --tags --max-count=1))
+  clt = checkout-latest-tag
 
   # Fancy logging.
   #   h = head
