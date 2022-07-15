@@ -68,17 +68,13 @@ if [ "$(uname -s)" != 'Darwin' ]; then
   ssh-add -l > /dev/null || ssh-add
 fi
 
-# plenv
-export PATH=$HOME/.plenv/bin:$PATH
-eval "$(plenv init -)"
-
-# rbenv
-export PATH=$HOME/.rbenv/bin:$PATH
-eval "$(rbenv init -)"
-
 # colors for ls
 export CLICOLOR=1
 export LSCOLORS='gxfxcxdxbxegedabagacad'
+
+# chruby
+source /usr/local/opt/chruby/share/chruby/chruby.sh
+source /usr/local/opt/chruby/share/chruby/auto.sh
 
 # load local configuration
 [[ -e ~/.zshrc.local ]] &&  source ~/.zshrc.local

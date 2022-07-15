@@ -11,14 +11,3 @@ export LANG=en_US.UTF-8
 # Set CC
 export CC=cc
 
-# Python Modules
-export PATH=$PATH:~/Library/Python/3.7/bin
-
-# TeXTiny
-export PATH=$PATH:$HOME/texbin
-
-# Yarn
-export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
-
-# Postgres
-export PATH="$PATH:/Applications/Postgres.app/Contents/Versions/latest/bin/"
