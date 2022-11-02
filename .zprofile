@@ -1,6 +1,9 @@
 # And local bin
 export PATH="$HOME/bin:$PATH"
 
+# Lisp bin/
+export PATH="$HOME/bin/lisp/bin:$PATH"
+
 # Homebrew GNU Make
 export PATH="/usr/local/opt/make/libexec/gnubin:$PATH"
 
