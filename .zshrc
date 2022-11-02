@@ -42,7 +42,6 @@ fi
 # application shortcuts
 alias g="git"
 alias ec="emacsclient -n"
-alias sbcl="rlwrap sbcl"
 
 # homegit
 alias homegit="GIT_DIR=~/.dotfiles/.git GIT_WORK_TREE=~ git"
