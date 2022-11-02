@@ -14,10 +14,11 @@
 (proclaim '(optimize (speed 0) (compilation-speed 0) (safety 3) (debug 3)))
 
 (require 'asdf)
-(require 'sb-aclrepl)
 
 #+sbcl
-(setf sb-impl::*default-external-format* :utf-8)
+(progn
+  (require 'sb-aclrepl)
+  (setf sb-impl::*default-external-format* :utf-8))
 
 (asdf:load-system "cl-manager" :verbose nil)
 
