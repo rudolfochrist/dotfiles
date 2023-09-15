@@ -41,7 +41,6 @@ fi
 
 # application shortcuts
 alias g="git"
-alias ec="emacsclient -n"
 
 # homegit
 alias homegit="GIT_DIR=~/.dotfiles/.git GIT_WORK_TREE=~ git"
@@ -78,4 +77,3 @@ source /usr/local/opt/chruby/share/chruby/auto.sh
 
 # load local configuration
 [[ -e ~/.zshrc.local ]] &&  source ~/.zshrc.local
-

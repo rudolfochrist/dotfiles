@@ -10,31 +10,44 @@
 ;;; - ~/.mkclrc (mkcl)
 ;;; - ~/.clinit.cl (acl/allegro cl)
 
-;;; with-debug
-(proclaim '(optimize (speed 0) (compilation-speed 0) (safety 3) (debug 3)))
+;;;
+;;; see also: https://github.com/marcoheisig/common-lisp-tweaks
+;;;
 
-(require 'asdf)
+;;; with-debug
+;;; give me more details during development
+(proclaim '(optimize (speed 0) (compilation-speed 0) (safety 3) (debug 3)))
 
 #+sbcl
 (progn
-  (require 'sb-aclrepl)
+  ;; and make sure I keep more details during development.
+  (sb-ext:restrict-compiler-policy 'safety 3)
+  (sb-ext:restrict-compiler-policy 'debug 3)
   (setf sb-impl::*default-external-format* :utf-8))
 
-(asdf:load-system "cl-manager" :verbose nil)
+(require 'asdf)
+(setf *print-level* 50)
+(setf *print-length* 200)
 
+#+sbcl
+(require 'sb-aclrepl)
 
-;;; Machine information
-(defun machine-info ()
-  "Print this host's details."
-  (format t "~@{~A: ~A~^~%~}~%"
-          "Machine Information"  ""
-          "-- Arch"  (machine-type)
-          "-- CPU"  (machine-version)
-          "-- OS" (software-type)
-          "-- Version" (software-version)
-          "-- Hostname"  (machine-instance)
-          "-- HOME"  (user-homedir-pathname)
-          "-- Site Name"  (list (short-site-name) (long-site-name))
-          "Lisp Information"  ""
-          "-- Implementation"  (lisp-implementation-type)
-          "-- Version"  (lisp-implementation-version)))
+#+asdf
+(progn
+  (defun current-directory-system-definition-searcher (system-name)
+    (probe-file (make-pathname :defaults (uiop:getcwd)
+                               :name (asdf:primary-system-name system-name)
+                               :type "asd")))
+  (setf asdf:*system-definition-search-functions*
+        (append asdf:*system-definition-search-functions*
+                (list 'current-directory-system-definition-searcher))))
+
+#-ocicl
+(when (probe-file #P"/Users/lispm/.local/share/ocicl/ocicl-runtime.lisp")
+  (load #P"/Users/lispm/.local/share/ocicl/ocicl-runtime.lisp")
+  ;; Any systems you install in /Users/lispm/.local/share/ocicl/
+  ;; will be available globally unless you comment out this line:
+  (asdf:initialize-source-registry
+   '(:source-registry
+     :ignore-inherited-configuration
+     (:tree #P"/Users/lispm/.local/share/ocicl/"))))

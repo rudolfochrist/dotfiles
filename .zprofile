@@ -1,3 +1,7 @@
+### Path
+
+# see: https://apple.stackexchange.com/questions/432226/homebrew-path-set-in-zshenv-is-overridden
+
 # And local bin
 export PATH="$HOME/bin:$PATH"
 
