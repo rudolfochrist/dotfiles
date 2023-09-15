@@ -1,0 +1,7 @@
+#!/bin/bash
+
+for heif in "$@"; do
+    pdf="${heif%.*}.pdf"
+    convert "$heif" "$pdf"
+    echo "Converted $heif => $pdf"
+done

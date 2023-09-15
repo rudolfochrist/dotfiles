@@ -1,0 +1,40 @@
+#!/usr/bin/env sbcl --script
+(load (funcall *userinit-pathname-function*))
+
+(ql:quickload
+ '("quri"
+   "cl-ppcre-unicode"
+   "plump")
+ :silent t)
+
+(defpackage #:ireal2csv
+  (:use :cl))
+
+(in-package #:ireal2csv)
+
+
+(defun get-irealb-link (doc)
+  (loop for a in (plump:get-elements-by-tag-name doc "a")
+        when (uiop:string-prefix-p "irealb://" (plump:attribute a "href"))
+          do (return (subseq (plump:attribute a "href") 9))))
+
+(let* ((ireal-playlist (merge-pathnames (first (uiop:command-line-arguments))
+                                        (uiop:getcwd)))
+       (doc (plump:parse ireal-playlist))
+       (ireal-link (get-irealb-link doc))
+       (split (ppcre:split "===" ireal-link))
+       (songs (butlast split)))
+  (format t "Title;Composer~&")
+  (loop for song in songs
+        collect (destructuring-bind (title composer &rest rest)
+                    (ppcre:split "=" song)
+                  (declare (ignore rest))
+                  (format t "~A;~A~%"
+                          (quri:url-decode title)
+                          (let ((decoded-composer (quri:url-decode composer)))
+                            (if (ppcre:scan "^\\S+ \\S+$" decoded-composer)
+                                (destructuring-bind (surname firstname)
+                                    (ppcre:split " " decoded-composer)
+                                  (concatenate 'string firstname " " surname))
+                                decoded-composer))))))
+

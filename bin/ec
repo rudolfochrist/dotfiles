@@ -1,0 +1,64 @@
+#!/bin/bash
+
+# helpers
+
+# meta
+version=0.1.0
+
+assert_value ()
+{
+    if [ -z "$2" ] || [ "${2:0:1}" = "-" ]; then
+        echo "Error: Argument for 0.1.0 is missing" >&2
+        exit 1
+    fi
+}
+
+usage ()
+{
+    cat <<EOF
+Usage: $(basename "$0") [options]
+
+Options:
+  -v, --version                          Show version.
+  -h, --help                             Show help.
+EOF
+}
+
+# Parsing args
+params=""
+flag="-n"
+
+while (( "$#" )); do
+    case "$1" in
+        -v|--version)
+            echo "$(basename "$0") v${version}"
+            exit 0
+            ;;
+        -h|--help)
+            usage
+            exit 0
+            ;;
+        -w|--wait)
+            flag="-c"
+            shift
+            ;;
+        -*)
+            echo "Error: Unsupported flag $1" >&2
+            exit 1
+            ;;
+        *)
+            params+="$1 "
+            shift
+            ;;
+    esac
+done
+# set positional arguments in their proper place
+eval set -- "$params"
+
+if ! pgrep -x Emacs; then
+    open /Applications/Emacs.app --args "$@"
+else
+    if command -v emacsclient > /dev/null; then
+        emacsclient "$flag" "$@"
+    fi
+fi
