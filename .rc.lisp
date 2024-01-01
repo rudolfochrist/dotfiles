@@ -16,13 +16,12 @@
 
 ;;; with-debug
 ;;; give me more details during development
-(proclaim '(optimize (speed 0) (compilation-speed 0) (safety 3) (debug 3)))
-
 #+sbcl
 (progn
   ;; and make sure I keep more details during development.
   (sb-ext:restrict-compiler-policy 'safety 3)
   (sb-ext:restrict-compiler-policy 'debug 3)
+  (sb-ext:restrict-compiler-policy 'space 3)
   (setf sb-impl::*default-external-format* :utf-8))
 
 (require 'asdf)
@@ -42,12 +41,14 @@
         (append asdf:*system-definition-search-functions*
                 (list 'current-directory-system-definition-searcher))))
 
-#-ocicl
-(when (probe-file #P"/Users/lispm/.local/share/ocicl/ocicl-runtime.lisp")
-  (load #P"/Users/lispm/.local/share/ocicl/ocicl-runtime.lisp")
-  ;; Any systems you install in /Users/lispm/.local/share/ocicl/
-  ;; will be available globally unless you comment out this line:
-  (asdf:initialize-source-registry
-   '(:source-registry
-     :ignore-inherited-configuration
-     (:tree #P"/Users/lispm/.local/share/ocicl/"))))
+#-quicklisp
+(let ((quicklisp-init #p"~/common-lisp/ql-https/ql-setup.lisp"))
+  (when (probe-file quicklisp-init)
+    (load quicklisp-init)
+    (asdf:load-system "ql-https")
+    (uiop:symbol-call :quicklisp :setup)))
+
+#+quicklisp
+(ql:quickload (list "project-loader"
+                    "cl-ppcre-unicode")
+              :silent t)

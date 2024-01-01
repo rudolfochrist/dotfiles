@@ -6,7 +6,8 @@ setopt prompt_subst
 setopt menucomplete
 
 # Load basic completions
-autoload compinit && compinit
+autoload -Uz compinit && compinit
+autoload -Uz bashcompinit && bashcompinit # compgen in zsh
 setopt magicequalsubst
 
 # Completion Config

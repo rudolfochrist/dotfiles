@@ -1,6 +1,7 @@
 [user]
   name = Sebastian Christ
   email = rudolfo.christ@gmail.com
+  signingkey = 271260815E41184B
 
 [core]
   editor = vim
