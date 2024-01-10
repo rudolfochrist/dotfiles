@@ -1,0 +1,271 @@
+#!/usr/bin/env sbcl --core /Users/lispm/bin/libexec/script.image --script
+;;; -*- mode: lisp; -*-
+
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (ql:quickload (list "clingon"
+                      "cl-yaml")
+                :silent t))
+
+
+(defpackage #:senf
+  (:use :cl :clingon))
+
+(in-package #:senf)
+
+(defvar *senf-store* (merge-pathnames ".senf/" (user-homedir-pathname)))
+(defvar *config* (make-hash-table))
+(defvar *group* nil)
+(defvar *env* nil)
+
+(defun cprint (string &rest arguments)
+  (apply #'format t (concatenate 'string "~&" string "~%") arguments))
+
+(defun strcat (&rest strings)
+  (format nil "~{~A~}" strings))
+
+(defun merge-directory-pathname (specified &optional (defaults *default-pathname-defaults*))
+  (uiop:ensure-directory-pathname
+   (merge-pathnames specified defaults)))
+
+(defun setup/command ()
+  (make-command
+   :name "setup"
+   :description "Initialize a new secured env store"
+   :handler (lambda (cmd)
+              (declare (ignore cmd))
+              (if (probe-file *senf-store*)
+                  (cprint "Store at ~A already initialized" *senf-store*)
+                  (progn
+                    (ensure-directories-exist *senf-store*)
+                    (cprint "Store created at ~A" *senf-store*)
+                    (add-group/handler "default"))))))
+
+(defun init/command ()
+  (make-command
+   :name "init"
+   :description "Create configuration file in current directory"
+   :handler (lambda (cmd)
+              (declare (ignore cmd))
+              (let ((conf (make-hash-table)))
+                (setf (gethash "store" conf) (namestring *senf-store*)
+                      (gethash "group" conf) (car (last (pathname-directory (uiop:getcwd)))))
+                (with-open-file (stream #p".senf.yml" :direction :output :if-exists :error)
+                  (yaml:with-emitter-to-stream (em stream)
+                    (yaml:emit-pretty-as-document em conf)))
+                (cprint "Configuration created: ~A" #p".senf.yml")))))
+
+(defun add-group/handler (name)
+  (let* ((path (merge-directory-pathname name *senf-store*))
+         (key-file (make-pathname :defaults path
+                                  :name name
+                                  :type "key")))
+    (ensure-directories-exist path)
+    (unless (probe-file key-file)
+      (uiop:run-program (list "age-keygen" "-o" (namestring key-file))))
+    (cprint "Group added: ~A" path)))
+
+(defun add-group/command ()
+  (make-command
+   :name "add-group"
+   :description "Add a new group"
+   :usage "NAME"
+   :handler (lambda (cmd)
+              (add-group/handler (first (command-arguments cmd))))))
+
+(defun list/command ()
+  (make-command
+   :name "list"
+   :description "List all groups and environments"
+   :handler (lambda (cmd)
+              (declare (ignore cmd))
+              (cprint "~A" *senf-store*)
+              (let ((directory-count 0)
+                    (file-count 0))
+                (dolist (group (uiop:subdirectories *senf-store*))
+                  (incf directory-count)
+                  (format t "|-- ~A~%" (car (last (pathname-directory group))))
+                  (dolist (file (uiop:directory-files group "*.enc"))
+                    (incf file-count)
+                    (format t "    |-- ~A~%" (pathname-name file))))
+                (cprint "~%~D directories, ~D files"
+                        directory-count
+                        file-count)))))
+
+(defun group-option ()
+  (make-option
+   :string
+   :description "group for new env file"
+   :short-name #\g
+   :long-name "group"
+   :key :group))
+
+(defun new/command ()
+  (flet ((touch (pathname)
+           (with-open-file (s pathname :direction :output :if-exists :error))))
+    (make-command
+     :name "new"
+     :description "Create a new encrypted env file"
+     :usage "[OPTIONS] ENV"
+     :options (list (group-option))
+     :handler (lambda (cmd)
+                (let* ((group (or (getopt cmd :group)
+                                  *group*
+                                  "default"))
+                       (group-dir (merge-directory-pathname group *senf-store*))
+                       (env (first (command-arguments cmd)))
+                       (env-file
+                         (make-pathname :defaults group-dir
+                                        :name env
+                                        :type "env"))
+                       (encrypted-env-file
+                         (make-pathname :defaults group-dir
+                                        :name (strcat env ".env")
+                                        :type "enc"))
+                       (key-file
+                         (make-pathname :defaults group-dir
+                                        :name group
+                                        :type "key")))
+                  (add-group/handler group)
+                  (touch env-file)
+                  (uiop:run-program (list "age" "-e" "-a"
+                                          "-i" (namestring key-file)
+                                          "-o" (namestring encrypted-env-file)
+                                          (namestring env-file)))
+                  (cprint "~A created" encrypted-env-file)
+                  (delete-file env-file))))))
+
+(defun show/command ()
+  (make-command
+   :name "show"
+   :description "Show env file"
+   :usage "[OPTIONS] ENV"
+   :options (list (group-option))
+   :handler (lambda (cmd)
+              (let* ((group (or (getopt cmd :group)
+                                *group*
+                                "default"))
+                     (env (or (first (command-arguments cmd))
+                              (error "Missing required argument: ENV")))
+                     (group-dir (merge-directory-pathname group *senf-store*))
+                     (key-file (make-pathname :defaults group-dir
+                                              :name group
+                                              :type "key"))
+                     (enc-env-file (make-pathname :defaults group-dir
+                                                  :name (strcat env ".env")
+                                                  :type "enc")))
+                (if (probe-file enc-env-file)
+                    (uiop:run-program
+                     (list "age" "-d"
+                           "-i" (namestring key-file)
+                           (namestring enc-env-file))
+                     :output *standard-output*)
+                    (error "'~A' env file for group ~A not found"
+                           env group))))))
+
+(defun edit/command ()
+  (make-command
+   :name "edit"
+   :description "Edit env file"
+   :usage "[OPTIONS] ENV"
+   :options (list (group-option))
+   :handler (lambda (cmd)
+              (let* ((group (or (getopt cmd :group)
+                                *group*
+                                "default"))
+                     (env (or (first (command-arguments cmd))
+                              (error "MIssing required argument: ENV")))
+                     (group-dir (merge-directory-pathname group *senf-store*))
+                     (key-file (make-pathname :defaults group-dir
+                                              :name group
+                                              :type "key"))
+                     (enc-env-file (make-pathname :defaults group-dir
+                                                  :name (strcat env ".env")
+                                                  :type "enc")))
+                (if (probe-file enc-env-file)
+                    (uiop:with-temporary-file (:stream tmp-stream)
+                      (uiop:run-program (list "age" "-d"
+                                              "-i" (namestring key-file)
+                                              (namestring enc-env-file))
+                                        :output tmp-stream)
+                      (uiop:run-program (append (uiop:split-string (or (uiop:getenvp "EDITOR")
+                                                                       "vim"))
+                                                (list (namestring (pathname tmp-stream))))
+                                        :force-shell t)
+                      (uiop:run-program (list "age" "-e" "-a"
+                                              "-i" (namestring key-file)
+                                              "-o" (namestring enc-env-file)
+                                              (namestring (pathname tmp-stream))))
+                      (cprint "~A saved" enc-env-file))
+                    (error "'~A' env file for group ~A not found"
+                           env group))))))
+
+(defun set-env-vars (key-file env-file)
+  (loop with raw-content = (uiop:run-program (list "age" "-d"
+                                                   "-i" (namestring key-file)
+                                                   (namestring env-file))
+                                             :output '(:string :stripped t))
+        for (env  value) on (uiop:split-string raw-content :separator '(#\= #\Newline))
+          by #'cddr
+        do (setf (uiop:getenv env) (string-trim '(#\") value))))
+
+(defun run/command ()
+  (make-command
+   :name "run"
+   :description "Start process with env vars from env file"
+   :options (list (group-option))
+   :usage "[OPTIONS] ENV -- PROCESS"
+   :handler (lambda (cmd)
+              (let* ((group (or (getopt cmd :group)
+                                *group*
+                                "default"))
+                     (env (or (first (command-arguments cmd))
+                              (error "MIssing required argument: ENV")))
+                     (group-dir (merge-directory-pathname group *senf-store*))
+                     (key-file (make-pathname :defaults group-dir
+                                              :name group
+                                              :type "key"))
+                     (enc-env-file (make-pathname :defaults group-dir
+                                                  :name (strcat env ".env")
+                                                  :type "enc")))
+                (set-env-vars key-file enc-env-file)
+                (uiop:run-program (rest (command-arguments cmd))
+                                  :force-shell t
+                                  :output *standard-output*
+                                  :error-output *error-output*)))))
+
+(defun toplevel/command ()
+  (make-command
+   :name "senf"
+   :description "sECURED enV fILES"
+   :usage "[OPTIONS] COMMAND"
+   :version "0.1"
+   :authors '("Sebastian Rudolfo Christ <rudolfo.christ@proton.me>")
+   :license "MPL-2.0"
+   :sub-commands (list (setup/command)
+                       (init/command)
+                       (add-group/command)
+                       (list/command)
+                       (new/command)
+                       (show/command)
+                       (edit/command)
+                       (run/command))
+   :handler (lambda (cmd)
+              (print-usage-and-exit cmd t))))
+
+(defun read-config ()
+  (uiop:if-let ((config-file (probe-file
+                              (merge-pathnames ".senf.yml" (uiop:getcwd)))))
+    (setf *config* (yaml:parse config-file))))
+
+(defun main ()
+  (read-config)
+  (setf *group* (gethash "group" *config*)
+        *senf-store* (or (uiop:getenvp "SENF_STORE")
+                         (gethash "store" *config*)
+                         *senf-store*))
+  (let ((app (toplevel/command)))
+    (clingon:run app)))
+
+(main)
+
+
