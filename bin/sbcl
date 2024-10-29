@@ -1,3 +1,0 @@
-#!/bin/bash
-
-rlwrap-lisp /usr/local/bin/sbcl --noinform "$@"

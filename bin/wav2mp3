@@ -1,9 +1,0 @@
-#!/bin/sh
-
-for wav in "$@"
-do
-    echo "Converting $wav to MP3"
-    mp3="${wav%.wav}.mp3"
-    ffmpeg -i "$wav" "$mp3"
-done
-
