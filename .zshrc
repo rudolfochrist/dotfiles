@@ -33,9 +33,11 @@ bindkey -e
 # navigation
 if [ -x '/usr/local/bin/gls' ]; then
     alias ls='gls'
+    alias l='ls -1pv --color=auto'
     alias ll='ls -lhv --color=auto'
     alias la='ll -A'
 else
+    alias l='ls -1p'
     alias ll="ls -lhG"
     alias la="ls -lAhG"
 fi
@@ -73,8 +75,11 @@ export CLICOLOR=1
 export LSCOLORS='gxfxcxdxbxegedabagacad'
 
 # chruby
-source /usr/local/opt/chruby/share/chruby/chruby.sh
-source /usr/local/opt/chruby/share/chruby/auto.sh
+source /opt/local/share/chruby/chruby.sh
+source /opt/local/share/chruby/auto.sh 
 
 # load local configuration
 [[ -e ~/.zshrc.local ]] &&  source ~/.zshrc.local
+
+# perl local::lib
+eval "$(perl -I$HOME/perl5/lib/perl5 -Mlocal::lib)"
