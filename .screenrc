@@ -20,3 +20,7 @@ termcapinfo xterm*|rxvt*|kterm*|Eterm* ti@:te@
 
 # mouse
 defmoustrack on
+
+# disable screenlock
+bind x
+bind ^x
