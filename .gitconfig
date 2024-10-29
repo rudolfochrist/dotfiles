@@ -1,7 +1,7 @@
 [user]
   name = Sebastian Christ
   email = rudolfo.christ@gmail.com
-  signingkey = 271260815E41184B
+  signingkey = 5D211D77B687C0C4D37AE776BD68F92EC6D092C8
 
 [core]
   editor = vim
@@ -74,7 +74,7 @@
   smudge = git-media-smudge %fg
 
 [gpg]
-	program = gpg
+	program = /usr/local/bin/gpg
 [credential]
 	helper = osxkeychain
 [init]
