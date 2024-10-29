@@ -22,7 +22,8 @@
   (sb-ext:restrict-compiler-policy 'safety 3)
   (sb-ext:restrict-compiler-policy 'debug 3)
   (sb-ext:restrict-compiler-policy 'space 3)
-  (setf sb-impl::*default-external-format* :utf-8))
+  (setf sb-impl::*default-external-format* :utf-8)
+  (setf sb-ext:*on-package-variance* '(:warn (:skynk :slynk-backend :slynk-api :swank :swank-backend) :error t)))
 
 (require 'asdf)
 (setf *print-level* 50)
@@ -37,18 +38,19 @@
     (probe-file (make-pathname :defaults (uiop:getcwd)
                                :name (asdf:primary-system-name system-name)
                                :type "asd")))
+  (defun vendor-directory-system-definition-searcher (system-name)
+    (dolist (dir (uiop:subdirectories (merge-pathnames "vendor/" (uiop:getcwd))))
+      (let ((asd-file (make-pathname :defaults dir
+                                     :name (asdf:primary-system-name system-name)
+                                     :type "asd")))
+        (when (probe-file asd-file)
+          (return asd-file)))))
   (setf asdf:*system-definition-search-functions*
         (append asdf:*system-definition-search-functions*
-                (list 'current-directory-system-definition-searcher))))
+                (list 'current-directory-system-definition-searcher
+                      'vendor-directory-system-definition-searcher))))
 
-#-quicklisp
-(let ((quicklisp-init #p"~/common-lisp/ql-https/ql-setup.lisp"))
-  (when (probe-file quicklisp-init)
-    (load quicklisp-init)
-    (asdf:load-system "ql-https")
-    (uiop:symbol-call :quicklisp :setup)))
+(when (probe-file #P"/Users/lispm/.local/share/ocicl/ocicl-runtime.lisp")
+  (load #P"/Users/lispm/.local/share/ocicl/ocicl-runtime.lisp"))
 
-#+quicklisp
-(ql:quickload (list "project-loader"
-                    "cl-ppcre-unicode")
-              :silent t)
+#+ocicl (setf ocicl-runtime:*verbose* t)
