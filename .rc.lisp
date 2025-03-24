@@ -23,7 +23,14 @@
   (sb-ext:restrict-compiler-policy 'debug 3)
   (sb-ext:restrict-compiler-policy 'space 3)
   (setf sb-impl::*default-external-format* :utf-8)
-  (setf sb-ext:*on-package-variance* '(:warn (:skynk :slynk-backend :slynk-api :swank :swank-backend) :error t)))
+  ;; (setf sb-ext:*on-package-variance* '(:warn (:skynk :slynk-backend :slynk-api :swank :swank-backend) :error t))
+  ;; xref sbcl sources/contrib
+  ;; see: https://github.com/Homebrew/homebrew-core/blob/master/Formula/s/sbcl.rb
+  ;; adjusted for MacPorts.
+  ;; Make sure to copy the src of sbcl manually to /opt/local/lib/sbcl
+  (setf (logical-pathname-translations "SYS")
+        '(("SYS:SRC;**;*.*.*" #p"/opt/local/lib/sbcl/src/**/*.*")
+          ("SYS:CONTRIB;**;*.*.*" #p"/opt/local/lib/sbcl/contrib/**/*.*"))))
 
 (require 'asdf)
 (setf *print-level* 50)
@@ -52,5 +59,3 @@
 
 (when (probe-file #P"/Users/lispm/.local/share/ocicl/ocicl-runtime.lisp")
   (load #P"/Users/lispm/.local/share/ocicl/ocicl-runtime.lisp"))
-
-#+ocicl (setf ocicl-runtime:*verbose* t)
