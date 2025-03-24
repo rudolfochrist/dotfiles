@@ -3,7 +3,7 @@ escape ^Zz
 
 # the following two lines give a two-line status, with the current window highlighted
 hardstatus alwayslastline
-hardstatus string '%{= bW}[%H%? %1`%?]  %-w%{+b rW} %n*%t%?(%u)%? %{-}%+w %=[%d %M %c]'
+hardstatus string '%{= 255;4}[%H%? %1`%?]  %-w%{+b 255;1} %n*%t%?(%u)%? %{-}%+w %=[%d %M %c]'
 
 # huge scrollback buffer
 defscrollback 5000
@@ -24,3 +24,6 @@ defmoustrack on
 # disable screenlock
 bind x
 bind ^x
+
+# https://www.greasyguide.com/linux/how-do-i-close-a-screen-session/
+autodetach on
