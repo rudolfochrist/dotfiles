@@ -4,7 +4,7 @@
   signingkey = 5D211D77B687C0C4D37AE776BD68F92EC6D092C8
 
 [core]
-  editor = vim
+  editor = mg
   quotepath = false
   warnambiguousrefs = true
 
