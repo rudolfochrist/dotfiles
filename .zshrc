@@ -31,7 +31,7 @@ setopt EXTENDED_HISTORY
 bindkey -e
 
 # navigation
-if [ -x '/usr/local/bin/gls' ]; then
+if [ -x '/opt/local/bin/gls' ]; then
     alias ls='gls'
     alias l='ls -1pv --color=auto'
     alias ll='ls -lhv --color=auto'
@@ -45,11 +45,16 @@ fi
 # application shortcuts
 alias g="git"
 
+if [[ -x "/opt/local/bin/gmake" ]]; then
+    alias make="gmake"
+fi
+
+if [[ -x "/opt/local/bin/gm4" ]]; then
+    alias m4="gm4"
+fi
+
 # homegit
 alias homegit="GIT_DIR=~/.dotfiles/.git GIT_WORK_TREE=~ git"
-
-# load more aliases
-[[ -e ~/.zsh_aliases ]] && . ~/.zsh_aliases
 
 # VCS
 autoload -Uz vcs_info
@@ -59,27 +64,35 @@ setopt prompt_subst
 # Prompt
 PS1="[%n@%M\$vcs_info_msg_0_ %1~]%# "
 
-# SSH Agent
-# https://unix.stackexchange.com/questions/90853/how-can-i-run-ssh-add-automatically-without-password-prompt/217223#217223
-if [ "$(uname -s)" != 'Darwin' ]; then
-  if [ ! -S $HOME/.ssh/ssh_auth_sock ]; then
-     eval "$(ssh-agent -s)"
-     ln -sf "$SSH_AUTH_SOCK" $HOME/.ssh/ssh_auth_sock
-  fi
-  export SSH_AUTH_SOCK=$HOME/.ssh/ssh_auth_sock
-  ssh-add -l > /dev/null || ssh-add
-fi
+# 12 FEB 2025
+# Not sure if this is still necessary?
+# # SSH Agent
+# # https://unix.stackexchange.com/questions/90853/how-can-i-run-ssh-add-automatically-without-password-prompt/217223#217223
+# if [ "$(uname -s)" != 'Darwin' ]; then
+#   if [ ! -S $HOME/.ssh/ssh_auth_sock ]; then
+#      eval "$(ssh-agent -s)"
+#      ln -sf "$SSH_AUTH_SOCK" $HOME/.ssh/ssh_auth_sock
+#   fi
+#   export SSH_AUTH_SOCK=$HOME/.ssh/ssh_auth_sock
+#   ssh-add -l > /dev/null || ssh-add
+# fi
 
 # colors for ls
 export CLICOLOR=1
 export LSCOLORS='gxfxcxdxbxegedabagacad'
 
 # chruby
-source /opt/local/share/chruby/chruby.sh
-source /opt/local/share/chruby/auto.sh 
-
-# load local configuration
-[[ -e ~/.zshrc.local ]] &&  source ~/.zshrc.local
+if [[ -e "/opt/local/share/chruby" ]]; then
+    source /opt/local/share/chruby/chruby.sh
+    source /opt/local/share/chruby/auto.sh
+fi
 
 # perl local::lib
-eval "$(perl -I$HOME/perl5/lib/perl5 -Mlocal::lib)"
+if [[ -e "$HOME/perl5/" ]]; then
+    eval "$(perl -I$HOME/perl5/lib/perl5 -Mlocal::lib)"
+fi
+
+# direnv
+if [[ -e "$(command -v direnv)" ]]; then
+    eval "$(direnv hook zsh)"
+fi
