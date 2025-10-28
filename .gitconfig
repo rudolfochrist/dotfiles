@@ -1,7 +1,7 @@
 [user]
   name = Sebastian Christ
-  email = rudolfo.christ@gmail.com
-  signingkey = 5D211D77B687C0C4D37AE776BD68F92EC6D092C8
+	email = rudolfo.christ@proton.me
+	signingkey = 4155E49F78379A68
 
 [core]
   editor = mg
@@ -84,3 +84,5 @@
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
+[commit]
+	gpgsign = true
