@@ -44,6 +44,8 @@ fi
 
 # application shortcuts
 alias g="git"
+alias mg="mg -n"
+alias screen="screen -U"
 
 if [[ -x "/opt/local/bin/gmake" ]]; then
     alias make="gmake"
@@ -81,10 +83,10 @@ PS1="[%n@%M\$vcs_info_msg_0_ %1~]%# "
 export CLICOLOR=1
 export LSCOLORS='gxfxcxdxbxegedabagacad'
 
-# chruby
-if [[ -e "/opt/local/share/chruby" ]]; then
-    source /opt/local/share/chruby/chruby.sh
-    source /opt/local/share/chruby/auto.sh
+# rv (ruby)
+# https://github.com/spinel-coop/rv
+if [[ -e "/usr/local/bin/rv" ]]; then
+    eval "$(rv shell init zsh)"
 fi
 
 # perl local::lib
@@ -92,7 +94,9 @@ if [[ -e "$HOME/perl5/" ]]; then
     eval "$(perl -I$HOME/perl5/lib/perl5 -Mlocal::lib)"
 fi
 
-# direnv
-if [[ -e "$(command -v direnv)" ]]; then
-    eval "$(direnv hook zsh)"
-fi
+## Helpers
+
+mkcd () {
+    mkdir -p "$1"
+    cd "$1"
+}
