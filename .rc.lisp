@@ -25,24 +25,20 @@
     (when (string= (pathname-name asd) system-name)
       (return asd))))
 
-(asdf:initialize-source-registry '(:source-registry :ignore-inherited-configuration))
-(setf asdf:*system-definition-search-functions*
-      (append asdf:*system-definition-search-functions*
-              (list 'search-systems-in-current-directory-tree)))
+#+asdf
+(progn
+  (asdf:initialize-source-registry '(:source-registry :ignore-inherited-configuration))
+  (setf asdf:*system-definition-search-functions*
+        (append asdf:*system-definition-search-functions*
+                (list 'search-systems-in-current-directory-tree))))
 
 ;;; with-debug
 ;;; give me more details during development
 #+sbcl
 (progn
+  (setf sb-impl::*default-external-format* :utf-8)
   ;; and make sure I keep more details during development.
   (sb-ext:restrict-compiler-policy 'safety 3)
   (sb-ext:restrict-compiler-policy 'debug 3)
-  (sb-ext:restrict-compiler-policy 'space 3)
-  (setf sb-impl::*default-external-format* :utf-8)
-  ;; xref sbcl sources/contrib
-  ;; see: https://github.com/Homebrew/homebrew-core/blob/master/Formula/s/sbcl.rb
-  ;; adjusted for MacPorts.
-  ;; Make sure to copy the src of sbcl manually to /opt/local/lib/sbcl
-  (setf (logical-pathname-translations "SYS")
-        '(("SYS:SRC;**;*.*.*" #p"/opt/local/lib/sbcl/src/**/*.*")
-          ("SYS:CONTRIB;**;*.*.*" #p"/opt/local/lib/sbcl/contrib/**/*.*"))))
+  (sb-ext:restrict-compiler-policy 'space 1 1)
+  (sb-ext:restrict-compiler-policy 'speed 1 1))
